@@ -27,7 +27,7 @@ export default function Rodape() {
     <>
       <View style={styles.rodape}>
         <Text style={styles.sala}>2TDSPF</Text>
-        <Text style={styles.nome}>Rafaella Monique do Carmo Bastos - 552424</Text>
+        <Text style={styles.nome}>Rafaella Monique do Carmo Bastos - 552425</Text>
         <Text style={styles.nome}>Luiz Fillipe Farias - 99519</Text>
       </View>
     </>
