@@ -35,6 +35,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     textAlignVertical: 'center',
     fontSize: 15,
+    padding: 8,
   },
   imagem: {
     width: 150,
