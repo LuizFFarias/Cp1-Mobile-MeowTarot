@@ -1,3 +1,6 @@
+//Rafaella Monique do Carmo Bastos - 552425
+//Luiz Fillipe Farias - 99519
+
 import React from 'react';
 import { View, StyleSheet, Text, Image, StatusBar, SafeAreaView, ScrollView } from 'react-native';
 import Rodape from './components/Rodape';
