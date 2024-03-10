@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
     width: 150,
     height: 90,
     alignSelf: 'center',
-  }
+  },
 });
 
 export default function App() {
