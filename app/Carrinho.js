@@ -13,7 +13,7 @@ export default function Agendar() {
                 <Text>R$16,00</Text>
 
                 <Text>Ver mais</Text>
-                <Text>Excluir]</Text>
+                <Text>Excluir</Text>
             </View>
         </>
     )
