@@ -1,4 +1,5 @@
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import teste from '../assets/Agend1.png'
 
 const styles = StyleSheet.create({
     subtitulo: {
@@ -64,7 +65,7 @@ export default function Agendar() {
             </View>
 
             <View style={styles.card}>
-                <Image source={} style={styles.cardImg}/>
+                <Image source={teste} style={styles.cardImg}/>
                 <Text style={styles.cardTit}></Text>
                 <Text style={styles.cardPreco}></Text>
 

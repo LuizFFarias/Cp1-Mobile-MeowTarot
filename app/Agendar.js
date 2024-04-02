@@ -1,4 +1,9 @@
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import Agnd1 from "../assets/Agend1.png";
+import Agnd2 from "../assets/Agend2.png";
+import Agnd3 from "../assets/Agend3.png";
+import Agnd4 from "../assets/Agend4.png";
+import Agnd5 from "../assets/Agend5.png";
 
 const styles = StyleSheet.create({
     subtitulo: {
@@ -57,6 +62,24 @@ const styles = StyleSheet.create({
 });
 
 export default function Agendar() {
+
+    const [opcSelecionada, setOpcSelecionada] = useState([]);
+
+    const handleOpcSelecionada = async (preco) => {
+        try {
+            let agendamentos = [];
+            if (await AsyncStorage.getItem("CARRINHO") !== null) {
+                agendamentos = JSON.parse(await AsyncStorage.getItem("CARRINHO"));
+            }
+     
+            agendamentos.push(preco);
+            await AsyncStorage.setItem('CARRINHO', JSON.stringify(agendamentos));
+            setOpcSelecionada(agendamentos);
+        } catch (error) {
+            console.error('Erro ao armazenar o preço:', error);
+        }
+    };
+
     return(
         <>
             <View style={styles.subtitulo}>
@@ -64,7 +87,7 @@ export default function Agendar() {
             </View>
 
             <View style={styles.card}>
-                <Image source={} style={styles.cardImg}/>
+                <Image source={Agnd1} style={styles.cardImg}/>
                 <Text style={styles.cardTit}>Alecrim dourado</Text>
                 <Text style={styles.cardPreco}>R$16,00</Text>
 
@@ -72,13 +95,13 @@ export default function Agendar() {
                     <Text styles={styles.botaoText}>Ver mais</Text> 
                 </TouchableOpacity>
                 
-                <TouchableOpacity styles={styles.botao}>
+                <TouchableOpacity styles={styles.botao} onPress={handleOpcSelecionada('Alecrim Dourado - R$ 16,00')}>
                     <Text styles={styles.botaoText}>Adicionar</Text>
                 </TouchableOpacity>
             </View>
 
             <View style={styles.card}>
-                <Image source={} style={styles.cardImg}/>
+                <Image source={Agnd2} style={styles.cardImg}/>
                 <Text style={styles.cardTit}>Perguntas avulsas</Text>
                 <Text style={styles.cardPreco}>R$10,00</Text>
 
@@ -93,7 +116,7 @@ export default function Agendar() {
             </View>
 
             <View style={styles.card}>
-                <Image source={} style={styles.cardImg}/>
+                <Image source={Agnd3} style={styles.cardImg}/>
                 <Text style={styles.cardTit}>Leitura da estrela</Text>
                 <Text style={styles.cardPreco}>R$32,00</Text>
 
@@ -107,7 +130,7 @@ export default function Agendar() {
             </View>
 
             <View style={styles.card}>
-                <Image source={} style={styles.cardImg}/>
+                <Image source={Agnd4} style={styles.cardImg}/>
                 <Text style={styles.cardTit}>Conselho</Text>
                 <Text style={styles.cardPreco}>R$4,00</Text>
 
@@ -121,7 +144,7 @@ export default function Agendar() {
             </View>
 
             <View style={styles.card}>
-                <Image source={} style={styles.cardImg}/>
+                <Image source={Agnd5} style={styles.cardImg}/>
                 <Text style={styles.cardTit}>Leitura da corte</Text>
                 <Text style={styles.cardPreco}>R$34,00</Text>
 
