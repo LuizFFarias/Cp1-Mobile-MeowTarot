@@ -73,7 +73,7 @@ export default function Agendar() {
                 </TouchableOpacity>
                 
                 <TouchableOpacity styles={styles.botao}>
-                    <Text styles={styles.botaoText}>Adicionar</Text>
+                    <Text styles={styles.botaoText}>Excluir</Text>
                 </TouchableOpacity>
             </View>
         </>
