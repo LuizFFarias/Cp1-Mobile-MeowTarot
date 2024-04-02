@@ -1,4 +1,6 @@
-import { View, Text, StyleSheet } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const styles = StyleSheet.create({
     subtitulo: {
@@ -10,14 +12,12 @@ const styles = StyleSheet.create({
         height: 83,
         width: 220,
         marginTop: 30,
-
     },
     textoSub: {
         textAlign: 'left',
         marginLeft: 7,
         fontSize: 22,
     },
-
     card: {
         backgroundColor: '#E8E0E5',
         height: 203,
@@ -40,7 +40,6 @@ const styles = StyleSheet.create({
         marginLeft: 1,
         fontSize: 17,
     },
-
     botao: {
         backgroundColor: '#1E9C09',
         borderTopLeftRadius: 5,
@@ -54,28 +53,53 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         fontSize: 11,
     }
-})
+});
 
-export default function Agendar() {
-    return(
+export default function Carrinho({ updateCarrinho }) {
+    const [carrinho, setCarrinho] = useState([]);
+
+    useEffect(() => {
+        const getItensCarrinho = async () => {
+            try {
+                const carrinhoData = await AsyncStorage.getItem('CARRINHO');
+                if (carrinhoData !== null) {
+                    setCarrinho(JSON.parse(carrinhoData));
+                }
+            } catch (error) {
+                console.error('Erro ao obter itens do carrinho:', error);
+            }
+        };
+
+        getItensCarrinho();
+    }, []);
+
+    const handleExcluirItem = async (index) => {
+        try {
+            const novoCarrinho = [...carrinho];
+            novoCarrinho.splice(index, 1);
+            await AsyncStorage.setItem('CARRINHO', JSON.stringify(novoCarrinho));
+            setCarrinho(novoCarrinho);
+            updateCarrinho(); 
+        } catch (error) {
+            console.error('Erro ao excluir item do carrinho:', error);
+        }
+    };
+
+    return (
         <>
             <View style={styles.subtitulo}>
                 <Text style={styles.textoSub}>Carrinho</Text>
             </View>
-
-            <View style={styles.card}>
-                <Image source={} style={styles.cardImg}/>
-                <Text style={styles.cardTit}></Text>
-                <Text style={styles.cardPreco}></Text>
-
-                <TouchableOpacity styles={styles.botao}>
-                    <Text styles={styles.botaoText}>Ver mais</Text> 
-                </TouchableOpacity>
-                
-                <TouchableOpacity styles={styles.botao}>
-                    <Text styles={styles.botaoText}>Excluir</Text>
-                </TouchableOpacity>
-            </View>
+            {carrinho.map((item, index) => (
+                <View key={index} style={styles.card}>
+                    <Image source={{ uri: item.imagem }} style={styles.cardImg}/>
+                    <Text style={styles.cardTit}>{item.nome}</Text>
+                    <Text style={styles.cardPreco}>{item.preco}</Text>
+                    <TouchableOpacity style={styles.botao} onPress={() => handleExcluirItem(index)}>
+                        <Text style={styles.botaoText}>Excluir</Text>
+                    </TouchableOpacity>
+                </View>
+            ))}
         </>
-    )
+    );
 }
