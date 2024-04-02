@@ -1,6 +1,3 @@
-//Rafaella Monique do Carmo Bastos - 552425
-//Luiz Fillipe Farias - 99519
-
 import React from 'react';
 import {
   View,
@@ -10,13 +7,17 @@ import {
   StatusBar,
   SafeAreaView,
   ScrollView,
+  TouchableOpacity
 } from 'react-native';
-import useNavigation from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Rodape from './components/Rodape';
 import Cabecalho from './components/Cabecalho';
 import Card1 from './assets/Card1.jpeg';
 import Card2 from './assets/Card2.jpeg';
 import Card3 from './assets/Card3.jpeg';
+import Agendar from './app/Agendar';
 
 const styles = StyleSheet.create({
   texto: {
@@ -53,44 +54,55 @@ const styles = StyleSheet.create({
   },
 });
 
-export default function App() {
-  const navigation = useNavigation(); // Use o hook useNavigation
+const Stack = createNativeStackNavigator();
 
-  const navigateToAgendar = () => {
-    navigation.navigate('Agendar'); // Navegue para o componente Agendar
+export default function App() {
+  return (
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="Agendar" component={Agendar} /> 
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+}
+
+function HomeScreen() {
+  return (
+    <SafeAreaView style={{ flex: 1 }}>
+      <StatusBar backgroundColor="white" barStyle="dark-content" />
+
+      <ScrollView>
+        <Cabecalho />
+
+        <Text style={styles.texto}>
+          O MeowTarot nasceu com a missão de levar o acesso ao tarot a todos,
+          independente de gênero, classe, raça ou crença.
+        </Text>
+
+        <CartaoDeNavegacao image={Card1} texto="Agende um atendimento" destino="Agendar" />
+        <CartaoDeNavegacao image={Card2} texto="Saiba mais sobre tarot" destino="SaibaMais" />
+        <CartaoDeNavegacao image={Card3} texto="Previsão mensal grátis" destino="PrevisaoMensal" />
+      </ScrollView>
+
+      <Rodape />
+    </SafeAreaView>
+  );
+}
+
+function CartaoDeNavegacao({ image, texto, destino }) {
+  const navigation = useNavigation();
+
+  const navigateToDestino = () => {
+    navigation.navigate(destino);
   };
 
   return (
-    <>
-      <SafeAreaView style={{ flex: 1 }}>
-        <StatusBar backgroundColor="white" barStyle="dark-content" />
-
-        <ScrollView>
-          <Cabecalho />
-
-          <Text style={styles.texto}>
-            O MeowTarot nasceu com a missao de levar o acesso ao tarot a todos,
-            independente de genero, classe, raca ou crenca.
-          </Text>
-
-          <View style={styles.card}>
-            <Image source={Card1} style={styles.imagem} />
-            <Text style={styles.textoCard}>Agende um atendimento</Text>
-          </View>
-
-          <View style={styles.card}>
-            <Image source={Card2} style={styles.imagem} />
-            <Text style={styles.textoCard}>Saiba mais sobre tarot</Text>
-          </View>
-
-          <View style={styles.card}>
-            <Image source={Card3} style={styles.imagem} />
-            <Text style={styles.textoCard}>Previsao mensal gratis</Text>
-          </View>
-        </ScrollView>
-
-        <Rodape />
-      </SafeAreaView>
-    </>
+    <TouchableOpacity onPress={navigateToDestino}>
+      <View style={styles.card}>
+        <Image source={image} style={styles.imagem} />
+        <Text style={styles.textoCard}>{texto}</Text>
+      </View>
+    </TouchableOpacity>
   );
 }
